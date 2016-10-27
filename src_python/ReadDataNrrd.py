@@ -1,15 +1,8 @@
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
 import numpy as np
-from scipy import ndimage
 import os
 from six.moves import cPickle as pickle
 import nrrd
 import sys
-
-# Folders :
-# TestingData : TestingData
-# TrainingData : TrainingData
 
 # Get folders names :
 root = os.getcwd()
