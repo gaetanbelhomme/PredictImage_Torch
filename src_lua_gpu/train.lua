@@ -3,11 +3,12 @@ require 'nn'
 require 'encoder'
 require 'loadData'
 require 'data_reader'
+require 'sys'
 
 -- Settings :
 defaults = {
   epochs = 100,
-  iters = 50,
+  iters = 100,
   learning_rate = 0.20,
   batch_size = 8,
   save_path = '../NetworkSave/encoder.bin'
@@ -25,6 +26,8 @@ options = cmd:parse(arg)
 print(options)
 
 -- Initialization :
+t = sys.clock()
+print(t)
 image_reader = data_reader()
 
 ae = encoder()
@@ -38,6 +41,7 @@ trainer = nn.StochasticGradient(ae.net, criterion)
 trainer.learningRate = options.learning_rate
 trainer.maxIteration = options.iters
 
+sys.tic()
 -- Training : 
 for t=1, options.epochs do
 
@@ -51,6 +55,7 @@ for t=1, options.epochs do
   trainer:train(data_set)
 
 end
-
+t = sys.toc()
+print(t)
 -- Network Saving :
 ae:save(options.save_path)

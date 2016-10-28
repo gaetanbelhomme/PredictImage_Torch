@@ -59,11 +59,29 @@ else:
 
 image_files = os.listdir(input)
 
+num_channels = 1
+image_size = 64
+
+def reformat(dataset_start, resize):
+    if resize:
+        dataset_start = dataset_start.reshape((1,image_size, image_size)).astype(np.float32)
+    else:
+        dataset_start = dataset_start.reshape((-1, image_size, image_size, num_channels)).astype(np.float32)
+    return dataset_start
+
 for file in image_files:
     filename, ext = os.path.splitext(file)
 
     if ext == '.npy':
         image = np.load(input + file)
-        nrrd.write(output + filename + '.nrrd', image, test_header_start[posInit])
+        image = reformat(image, True)
+        nrrd.write(output + filename + '.nrrd', image)
+        #nrrd.write(output + filename + '.nrrd', image, test_header_start[posInit])
 
 
+
+test_start = np.load("../Data/input/test_dataset_start.npy")
+test_end = np.load("../Data/input/test_dataset_end.npy")
+
+nrrd.write("start.nrrd", test_start[0])
+nrrd.write("end.nrrd", test_end[0])

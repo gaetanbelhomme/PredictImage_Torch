@@ -44,9 +44,9 @@ print('Validation:', valid_dataset_start.shape, valid_dataset_end.shape)
 print('Testing:', test_dataset_start.shape, test_dataset_end.shape)
 
 print('Headers:')
-print('training', np.size(train_set_headers))
-print('validation', np.size(valid_set_headers))
-print('testing', np.size(test_set_headers))
+print('training', np.shape(train_set_headers))
+print('validation', np.shape(valid_set_headers))
+print('testing', np.shape(test_set_headers))
 
 # Randomize datasets
 train_dataset_start, train_dataset_end, train_set_headers = CD.randomize(train_dataset_start, train_dataset_end,
@@ -87,3 +87,5 @@ save_header = {
 
 CD.store(save)
 CD.store(save_header, type='pickle', name=CD.headeroutput)
+
+#print('start :', test_set_headers[0])

@@ -8,7 +8,7 @@ npy4th = require 'npy4th'
 defaults = {
   batch_size = 1,
   n_batches = 1,
-  save_prefix = '../Data/output'
+  save_prefix = '../Data/outputNpy'
 }
 
 cmd = torch.CmdLine()
@@ -32,19 +32,19 @@ print(offset)
 
 -- Get the output :
 for i=1, options.n_batches do
-  data_batch = image_reader:get_testing_data(options.batch_size, offset)
+  data_batch, data_out = image_reader:get_testing_data(options.batch_size, offset)
   for j=1, options.batch_size do
     local input_filename = options.save_prefix .. '/' .. 'input_' .. i .. '_' .. j .. '.npy'
     local output_filename = options.save_prefix .. '/' .. 'output_' .. i .. '_' .. j .. '.npy'
 
     input = data_batch[j]
     result = ae:forward(input[j])
-
+    out = data_out[j]
     print('Input : ', input)
     print('Output : ', result)
 
     npy4th.savenpy(input_filename, input[j])
     npy4th.savenpy(output_filename, result[j])
-
+    npy4th.savenpy("out.npy", out[j])
   end
 end
